@@ -3,6 +3,7 @@ import time
 from modbus_reader import ModbusReader
 from modbus_decoder import ModbusDecoder
 from database_writer import DatabaseWriter
+from mqtt_publisher import MQTTPublisher
 
 
 # -----------------------------
@@ -25,10 +26,10 @@ FARM_ID = "KRK-01"
 reader = ModbusReader(host="127.0.0.1", port=5020)
 decoder = ModbusDecoder()
 db = DatabaseWriter(config)
+mqtt = MQTTPublisher()
 
 
 print("Edge Gateway started...")
-
 
 # -----------------------------
 # MAIN LOOP
@@ -40,15 +41,13 @@ while True:
         data = decoder.decode(raw)
 
         if data:
-            # RAW insert
             db.insert_raw(FARM_ID, data)
-
-            # alarms
             db.insert_alarm(FARM_ID, data)
-
-            # business metrics
             db.insert_business(FARM_ID, data)
 
-            print(f"[OK] Data saved: {data}")
+            mqtt.publish_telemetry(FARM_ID, data)
+            mqtt.publish_alarm(FARM_ID, data)
+
+            print("[OK] Data saved + published")
 
     time.sleep(1)
