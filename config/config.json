@@ -1,0 +1,27 @@
+{
+    "farm_id": "KRK-01",
+
+    "modbus": {
+        "host": "127.0.0.1",
+        "port": 5020
+    },
+
+    "database": {
+        "host": "localhost",
+        "port": 5432,
+        "db_name": "pv_scada",
+        "db_user": "pv_user",
+        "db_password": "pv_pass"
+    },
+
+    "mqtt": {
+        "host": "localhost",
+        "port": 1883,
+        "telemetry_topic": "pv/farm1/telemetry",
+        "alarm_topic": "pv/farm1/alarms"
+    },
+
+    "opcua": {
+        "endpoint": "opc.tcp://0.0.0.0:4840/edge_gateway/"
+    }
+}
