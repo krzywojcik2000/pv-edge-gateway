@@ -17,7 +17,7 @@ class Measurement:
     energy: float
     alarm: Alarm
 
-    # enriched fields
-    farm_id: str
+    farm_id: str | None = None
+
     timestamp: datetime | None = None
     efficiency: float | None = None

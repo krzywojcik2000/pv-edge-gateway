@@ -23,5 +23,18 @@
 
     "opcua": {
         "endpoint": "opc.tcp://0.0.0.0:4840/edge_gateway/"
+    },
+    "routing": {
+        "db": {
+            "always": true
+        },
+
+        "mqtt": {
+            "enabled_if": "temperature > 10"
+        },
+
+        "opcua": {
+            "enabled_if": "alarm == true"
+        }
     }
-}
+}   
